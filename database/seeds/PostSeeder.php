@@ -15,7 +15,7 @@ class PostSeeder extends Seeder
     {
         for ($i=0; $i < 10; $i++) { 
             $n = new Post();
-            $n->title = $f->words( rand(5, 10), true );
+            $n->title = $f->unique()->words( rand(5, 10), true );
             $n->description = $f->paragraph( rand(10, 20), true );
             $n->shug = str_replace(' ', '-', $n->title);
 

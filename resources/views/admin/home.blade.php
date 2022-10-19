@@ -18,7 +18,7 @@
                 </div>
 
                 <div>
-                    <a href="{{route('admin.posts.index')}}" class="btn btn-primary d-block">Vai ai POSTS</a>
+                    <a href="{{route('admin.posts.index')}}" class="btn btn-primary d-block">GO TO POSTS</a>
                 </div>
             </div>
         </div>

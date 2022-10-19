@@ -21,7 +21,7 @@
                     <input type="text" class="form-control" id="shug" name="shug" value="{{ old('shug', $post->shug) }}">
                 </div>
                 <div class="d-flex justify-content-center">
-                    <input class="btn btn-secondary" type="submit" value="MODIFICA">
+                    <input class="btn btn-secondary" type="submit" value="UPDATE">
                 </div>
             </form>
         </div>
