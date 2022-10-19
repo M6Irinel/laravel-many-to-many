@@ -15,7 +15,9 @@ class ControllerPost extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -25,7 +27,7 @@ class ControllerPost extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -36,7 +38,9 @@ class ControllerPost extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = POST::create(config('methods.validate')($request));
+
+        return redirect()->route('admin.posts.show', compact('post'));
     }
 
     /**
@@ -47,7 +51,7 @@ class ControllerPost extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -58,7 +62,7 @@ class ControllerPost extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -70,7 +74,9 @@ class ControllerPost extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->update(config('methods.validate')($request));
+
+        return redirect()->route('admin.posts.show', compact('post'));
     }
 
     /**
@@ -81,6 +87,8 @@ class ControllerPost extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect()->route('admin.posts.index');
     }
 }

@@ -16,6 +16,10 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+
+                <div>
+                    <a href="{{route('admin.posts.index')}}" class="btn btn-primary d-block">Vai ai POSTS</a>
+                </div>
             </div>
         </div>
     </div>
