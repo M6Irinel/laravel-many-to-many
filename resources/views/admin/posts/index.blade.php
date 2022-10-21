@@ -30,7 +30,7 @@
                             <th scope="row">{{ $post->id }}</th>
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->description }}</td>
-                            <td>{{ $post->shug }}</td>
+                            <td>{{ $post->slug }}</td>
                             <td>
                                 <a type="button" class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Look!</a>
                             </td>

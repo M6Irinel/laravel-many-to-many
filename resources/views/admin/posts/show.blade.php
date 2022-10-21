@@ -5,7 +5,7 @@
         <div class="container">
             <h1 class="display-4">{{ $post->title }}</h1>
             <p class="lead">{{ $post->description }}</p>
-            <p class="lead">{{ $post->shug }}</p>
+            <p class="lead">{{ $post->slug }}</p>
         </div>
         <div class="container d-flex justify-content-center">
             <a class="btn btn-secondary" href="{{ route('admin.posts.edit', $post) }}">EDIT</a>

@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="shug">Shug</label>
-                    <input type="text" class="form-control @error('shug') is-invalid @enderror" id="shug"
-                        name="shug" value="{{ old('shug') }}">
-                    @error('shug')
+                    <label for="slug">Slug</label>
+                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
+                        name="slug" value="{{ old('slug') }}">
+                    @error('slug')
                         <p class="invalid-feedback">{{ $message }}</p>
                     @enderror
                 </div>
