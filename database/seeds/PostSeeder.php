@@ -18,6 +18,7 @@ class PostSeeder extends Seeder
             $n->title = $f->unique()->words( rand(5, 10), true );
             $n->description = $f->paragraph( rand(10, 20), true );
             $n->slug = str_replace(' ', '-', $n->title);
+            $n->category_id = $f->randomElement([1,2,3,4]);
 
             $n->save();
         }

@@ -17,7 +17,7 @@ class CreatePostsCategoryIdForeign extends Migration
 
             $t->unsignedBigInteger('category_id')->after('slug')->onDelete('set null');
 
-            $t->foreign('category_id')->references('id')->on('category');
+            $t->foreign('category_id')->references('id')->on('categories');
         });
     }
 
