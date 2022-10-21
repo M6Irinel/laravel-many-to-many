@@ -4,7 +4,7 @@ return [
         return $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'shug' => 'nullable|max:255'
+            'slug' => 'nullable|max:255|unique:posts'
         ]);
     },
 ];

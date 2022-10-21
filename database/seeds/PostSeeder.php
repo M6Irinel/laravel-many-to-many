@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Post;
+use App\Category;
 
 class PostSeeder extends Seeder
 {
@@ -18,7 +19,7 @@ class PostSeeder extends Seeder
             $n->title = $f->unique()->words( rand(5, 10), true );
             $n->description = $f->paragraph( rand(10, 20), true );
             $n->slug = str_replace(' ', '-', $n->title);
-            $n->category_id = $f->randomElement([1,2,3,4]);
+            $n->category_id = rand(1, count(Category::all()));
 
             $n->save();
         }
