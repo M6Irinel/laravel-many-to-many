@@ -20,8 +20,8 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Shug</th>
-                        <th scope="col">Catedory_id</th>
+                        <th scope="col">Slug</th>
+                        <th scope="col">Category_id</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -32,7 +32,7 @@
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->description }}</td>
                             <td>{{ $post->slug }}</td>
-                            <td>{{ $post->category_id }} : {{ $post->category->name }}</td>
+                            <td>{{ $post->category ? $post->category->name : 'nessuna categoria' }}</td>
                             <td>
                                 <a type="button" class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Look!</a>
                             </td>

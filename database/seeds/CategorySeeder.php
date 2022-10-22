@@ -2,6 +2,7 @@
 
 use App\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -12,11 +13,14 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Food', 'Film', 'Sport', 'Exploration'];
+        $categories = ['Serie TV', 'Food', 'Film', 'Sport', 'Exploration', 'Moda', 'Digitale'];
 
         foreach ($categories as $name) {
             $c = new Category();
+
             $c->name = $name;
+            $c->slug = Str::slug($name);
+
             $c->save();
         }
     }

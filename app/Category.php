@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     public function posts(){
+        // // short
+        // return $this->hasMany('App\Post');
+
+        // // long
         return $this->hasMany('App\Post', 'category_id', 'id');
     }
 }

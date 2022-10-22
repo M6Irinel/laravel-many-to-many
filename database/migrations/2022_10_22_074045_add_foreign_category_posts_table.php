@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePostsCategoryIdForeign extends Migration
+class AddForeignCategoryPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,9 @@ class CreatePostsCategoryIdForeign extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $t) {
+            $t->unsignedBigInteger('category_id')->after('slug')->nullable();
 
-            $t->unsignedBigInteger('category_id')->after('slug')->onDelete('set null');
-
-            $t->foreign('category_id')->references('id')->on('categories');
+            $t->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
@@ -29,7 +28,6 @@ class CreatePostsCategoryIdForeign extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $t) {
-
             $t->dropForeign(['category_id']);
 
             $t->dropColumn('category_id');

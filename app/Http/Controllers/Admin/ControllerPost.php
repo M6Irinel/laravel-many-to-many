@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use App\Category;
 
 class ControllerPost extends Controller
@@ -16,7 +18,7 @@ class ControllerPost extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->get();
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -28,7 +30,9 @@ class ControllerPost extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::orderBy('name', 'asc')->get();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -39,9 +43,13 @@ class ControllerPost extends Controller
      */
     public function store(Request $request)
     {
-        $post = POST::create(config('methods.validate')($request));
+        $params = Post::validate_for_create($request);
 
-        return redirect()->route('admin.posts.show', compact('post'));
+        $params['slug'] = Post::slug($params);
+
+        $post = Post::create($params);
+
+        return redirect()->route('admin.posts.show', $post);
     }
 
     /**
@@ -63,7 +71,9 @@ class ControllerPost extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact(['post', 'categories']));
     }
 
     /**
@@ -75,7 +85,13 @@ class ControllerPost extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->update(config('methods.validate')($request));
+        $params = Post::validate_for_update($request, $post);
+
+        if ($params['title'] !== $post->title) {
+            $params['slug'] = Post::slug($params);
+        }
+
+        $post->update($params);
 
         return redirect()->route('admin.posts.show', compact('post'));
     }
