@@ -11,15 +11,34 @@
                 <p class="lead">Slug della categoria : <strong>{{ $post->category->slug }}</strong></p>
             @endif
 
+            <p class="m-0">Tags</p>
+            <ul>
+                @forelse($post->tags as $tag)
+                    <li>{{ $tag->name }}</li>
+                    <ol>
+                        @foreach ($tag->posts()->where('id', '!=', $post->id)->get() as $p)
+                            <li>
+                                <a href="{{ route('admin.posts.show', $p) }}">
+                                    {{ $p->title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ol>
+                @empty
+                    <li class="bold">-</li>
+                @endforelse
+            </ul>
+
             <p class="m-0"><strong>Other posts with this category :</strong></p>
             <ol>
                 @if ($post->category)
                     @foreach ($post->category->posts as $posts_as_one_category)
-                        <li class="m-0">{{ $posts_as_one_category->title }}</>
+                        <li class="m-0">{{ $posts_as_one_category->title }}</li>
                     @endforeach
                 @endif
-                </ul>
+            </ol>
         </div>
+
         <div class="container d-flex justify-content-center">
             <a class="btn btn-secondary" href="{{ route('admin.posts.edit', $post) }}">EDIT</a>
             <div>

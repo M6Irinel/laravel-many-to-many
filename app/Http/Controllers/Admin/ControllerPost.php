@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Post;
 use App\Category;
+use App\Tag;
 
 class ControllerPost extends Controller
 {
@@ -32,7 +33,9 @@ class ControllerPost extends Controller
     {
         $categories = Category::orderBy('name', 'asc')->get();
 
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::orderBy('name', 'asc')->get();
+
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -48,6 +51,10 @@ class ControllerPost extends Controller
         $params['slug'] = Post::slug($params);
 
         $post = Post::create($params);
+
+        if (array_key_exists('tags', $params)) {
+            $post->tags()->sync($params['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $post);
     }
@@ -73,7 +80,9 @@ class ControllerPost extends Controller
     {
         $categories = Category::all();
 
-        return view('admin.posts.edit', compact(['post', 'categories']));
+        $tags = Tag::orderBy('name', 'asc')->get();
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -89,6 +98,10 @@ class ControllerPost extends Controller
 
         if ($params['title'] !== $post->title) {
             $params['slug'] = Post::slug($params);
+        }
+
+        if (array_key_exists('tags', $params)) {
+            $post->tags()->sync($params['tags']);
         }
 
         $post->update($params);

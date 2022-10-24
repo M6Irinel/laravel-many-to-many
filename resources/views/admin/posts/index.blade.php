@@ -7,7 +7,7 @@
                 <h1>Posts</h1>
             </div>
             <div>
-                <a class="btn btn-success" href="{{route('admin.posts.create')}}">CREATE NEW POST</a>
+                <a class="btn btn-success" href="{{ route('admin.posts.create') }}">CREATE NEW POST</a>
             </div>
         </div>
     </section>
@@ -22,6 +22,7 @@
                         <th scope="col">Description</th>
                         <th scope="col">Slug</th>
                         <th scope="col">Category_id</th>
+                        <th scope="col">Tags</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -34,7 +35,17 @@
                             <td>{{ $post->slug }}</td>
                             <td>{{ $post->category ? $post->category->name : 'nessuna categoria' }}</td>
                             <td>
-                                <a type="button" class="btn btn-success" href="{{ route('admin.posts.show', $post) }}">Look!</a>
+                                <ul>
+                                    @forelse ($post->tags as $tag)
+                                        <li>{{ $tag->id }}</li>
+                                    @empty
+                                        <li>-</li>
+                                    @endforelse
+                                </ul>
+                            </td>
+                            <td>
+                                <a type="button" class="btn btn-success"
+                                    href="{{ route('admin.posts.show', $post) }}">Look!</a>
                             </td>
                         </tr>
                     @endforeach

@@ -19,13 +19,19 @@ class Post extends Model
         return $this->belongsTo('App\Category', 'category_id', 'id');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'post_tag', 'post_id', 'tag_id');
+    }
+
     public static function validate_for_create($request)
     {
         return $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'slug' => 'nullable|max:255|unique:posts',
-            'category_id' => 'nullable|exists:App\Category,id'
+            'category_id' => 'nullable|exists:App\Category,id',
+            'tags' => 'nullable|exists:App\Tag,id'
         ]);
     }
 
@@ -35,7 +41,8 @@ class Post extends Model
             'title' => 'required|max:255',
             'description' => 'required',
             'slug' => ['nullable', 'max:255', Rule::unique('posts')->ignore($post->id)],
-            'category_id' => 'nullable|exists:App\Category,id'
+            'category_id' => 'nullable|exists:App\Category,id',
+            'tags' => 'nullable|exists:App\Tag,id'
         ]);
     }
 

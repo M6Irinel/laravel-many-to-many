@@ -23,13 +23,32 @@
                 <div class="form-group">
                     <label for="category_id">Categoria</label>
 
-                    <select class="custom-select @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
+                    <select class="custom-select @error('category_id') is-invalid @enderror" name="category_id"
+                        id="category_id">
                         <option value="">-- nessuna --</option>
 
-                        @foreach($categories as $category)
-                            <option @if(old('category_id') == $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
+                        @foreach ($categories as $category)
+                            <option @if (old('category_id') == $category->id) selected @endif value="{{ $category->id }}">
+                                {{ $category->name }}</option>
                         @endforeach
                     </select>
+
+                    @error('category_id')
+                        <p class="invalid-feedback">{{ $message }}</p>
+                    @enderror
+                </div>
+
+
+                <div class="form-group">
+                    <p for="category_id">Tags</p>
+
+                    @foreach ($tags as $tag)
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="tags[]" @if (in_array($tag->id, old('tags', []))) checked @endif
+                                type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}">
+                            <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                        </div>
+                    @endforeach
 
                     @error('category_id')
                         <p class="invalid-feedback">{{ $message }}</p>

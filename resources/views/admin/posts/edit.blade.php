@@ -40,6 +40,22 @@
 
 
                 <div class="form-group">
+                    <p for="category_id">Tags</p>
+
+                    @foreach ($tags as $tag)
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="tags[]" @if (in_array($tag->id, old('tags', $post->tags->pluck('id')->all()))) checked @endif
+                                type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}">
+                            <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
+                        </div>
+                    @endforeach
+
+                    @error('category_id')
+                        <p class="invalid-feedback">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="description">Description</label>
 
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
