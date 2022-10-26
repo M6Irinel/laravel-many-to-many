@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'description', 'slug', 'category_id'];
+    protected $fillable = ['title', 'description', 'slug', 'category_id', 'image'];
 
     public function category()
     {
@@ -17,6 +17,11 @@ class Post extends Model
 
         // // long
         return $this->belongsTo('App\Category', 'category_id', 'id');
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return asset('storage/' . $this->image);
     }
 
     public function tags()
@@ -31,7 +36,8 @@ class Post extends Model
             'description' => 'required',
             'slug' => 'nullable|max:255|unique:posts',
             'category_id' => 'nullable|exists:App\Category,id',
-            'tags' => 'nullable|exists:App\Tag,id'
+            'tags' => 'nullable|exists:App\Tag,id',
+            'image' => 'nullable|image|max:3000'
         ]);
     }
 
@@ -42,7 +48,8 @@ class Post extends Model
             'description' => 'required',
             'slug' => ['nullable', 'max:255', Rule::unique('posts')->ignore($post->id)],
             'category_id' => 'nullable|exists:App\Category,id',
-            'tags' => 'nullable|exists:App\Tag,id'
+            'tags' => 'nullable|exists:App\Tag,id',
+            'image' => 'nullable|image|max:3000'
         ]);
     }
 

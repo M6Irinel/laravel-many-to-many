@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Post;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class ControllerPost extends Controller
 {
@@ -47,6 +48,10 @@ class ControllerPost extends Controller
     public function store(Request $request)
     {
         $params = Post::validate_for_create($request);
+
+        if(array_key_exists('image', $params)){
+            $params['image'] = Storage::put('uploads', $params['image']);
+        }
 
         $params['slug'] = Post::slug($params);
 
@@ -95,6 +100,14 @@ class ControllerPost extends Controller
     public function update(Request $request, Post $post)
     {
         $params = Post::validate_for_update($request, $post);
+        
+        if(array_key_exists('image', $params)){
+            if($post->image && Storage::exists($post->image)){
+                Storage::delete($post->image);
+            }
+            $params['image'] = Storage::put('uploads', $params['image']);
+        }
+
 
         if ($params['title'] !== $post->title) {
             $params['slug'] = Post::slug($params);
@@ -117,7 +130,13 @@ class ControllerPost extends Controller
      */
     public function destroy(Post $post)
     {
+        $img = $post->image;
+
         $post->delete();
+
+        if($img && Storage::exists($img)){
+            Storage::delete($img);
+        }
 
         return redirect()->route('admin.posts.index');
     }

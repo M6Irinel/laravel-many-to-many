@@ -3,7 +3,7 @@
 @section('content')
     <section>
         <div class="container">
-            <form action="{{ route('admin.posts.update', $post) }}" method="POST">
+            <form action="{{ route('admin.posts.update', $post) }}" method="POST" enctype="multipart/form-data">
 
                 @csrf
 
@@ -17,6 +17,20 @@
                         name="title" value="{{ old('title', $post->title) }}">
 
                     @error('title')
+                        <p class="invalid-feedback">{{ $message }}</p>
+                    @enderror
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+
+                    <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input" id="image">
+                        <label class="custom-file-label" for="image">Choose file</label>
+                    </div>
+
+                    @error('image')
                         <p class="invalid-feedback">{{ $message }}</p>
                     @enderror
                 </div>

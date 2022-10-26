@@ -3,7 +3,7 @@
 @section('content')
     <section>
         <div class="container">
-            <form action="{{ route('admin.posts.store') }}" method="POST">
+            <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
 
                 @csrf
 
@@ -15,6 +15,20 @@
                         name="title" value="{{ old('title') }}">
 
                     @error('title')
+                        <p class="invalid-feedback">{{ $message }}</p>
+                    @enderror
+                </div>
+
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+
+                    <div class="custom-file">
+                        <input type="file" name="image" class="custom-file-input" id="image">
+                        <label class="custom-file-label" for="image">Choose file</label>
+                    </div>
+
+                    @error('image')
                         <p class="invalid-feedback">{{ $message }}</p>
                     @enderror
                 </div>
@@ -44,7 +58,7 @@
 
                     @foreach ($tags as $tag)
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="tags[]" @if(in_array($tag->id, old('tags', []))) checked @endif
+                            <input class="form-check-input" name="tags[]" @if (in_array($tag->id, old('tags', []))) checked @endif
                                 type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}">
                             <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->name }}</label>
                         </div>

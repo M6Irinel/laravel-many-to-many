@@ -3,13 +3,22 @@
 @section('content')
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">{{ $post->title }}</h1>
-            <p class="lead">{{ $post->description }}</p>
-            <p class="lead"><strong>{{ $post->slug }}</strong></p>
-            @if ($post->category)
-                <p class="lead">Nome della categoria : <strong>{{ $post->category->name }}</strong></p>
-                <p class="lead">Slug della categoria : <strong>{{ $post->category->slug }}</strong></p>
-            @endif
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h1 class="display-4">{{ $post->title }}</h1>
+                    <p class="lead">{{ $post->description }}</p>
+                    <p class="lead"><strong>{{ $post->slug }}</strong></p>
+                    @if ($post->category)
+                        <p class="lead">Nome della categoria : <strong>{{ $post->category->name }}</strong></p>
+                        <p class="lead">Slug della categoria : <strong>{{ $post->category->slug }}</strong></p>
+                    @endif
+                </div>
+                @if ($post->image)
+                    <div>
+                        <img src="{{ $post->image_url }}" alt="Image post">
+                    </div>
+                @endif
+            </div>
 
             <p class="m-0">Tags</p>
             <ul>
