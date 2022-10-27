@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('admin', function () {
+    return view('admin.welcome');
 });
 
 Auth::routes();
@@ -31,3 +31,7 @@ Route::middleware('auth')
 
         Route::resource('posts', 'ControllerPost');
     });
+
+Route::get('{any?}', function () {
+    return view('front.home');
+})->where('any', '.*');
