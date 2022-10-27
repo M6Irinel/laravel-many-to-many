@@ -8,7 +8,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Post;
 use App\Category;
+use App\Mail\SendPostCreatedMail;
 use App\Tag;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ControllerPost extends Controller
@@ -60,6 +62,9 @@ class ControllerPost extends Controller
         if (array_key_exists('tags', $params)) {
             $post->tags()->sync($params['tags']);
         }
+
+        // Mail::to($request->user())->send(new SendPostCreatedMail());
+        Mail::to('ciccio.pasticcio@gmail.com')->send(new SendPostCreatedMail($post));
 
         return redirect()->route('admin.posts.show', $post);
     }
